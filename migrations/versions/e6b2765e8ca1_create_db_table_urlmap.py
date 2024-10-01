@@ -1,8 +1,8 @@
 """create db table urlmap
 
-Revision ID: b0401cde5d1f
+Revision ID: e6b2765e8ca1
 Revises: 
-Create Date: 2024-10-01 12:50:48.567173
+Create Date: 2024-10-01 13:16:10.021532
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'b0401cde5d1f'
+revision = 'e6b2765e8ca1'
 down_revision = None
 branch_labels = None
 depends_on = None

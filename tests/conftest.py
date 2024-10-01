@@ -15,8 +15,8 @@ _tmp_db_uri = 'sqlite:///:memory:'
 os.environ['DATABASE_URI'] = _tmp_db_uri
 
 try:
-    from yacut_app import app, db
-    from yacut_app.models import URLMap  # noqa
+    from yacut import app, db
+    from yacut.models import URLMap  # noqa
 except NameError as exc:
     raise AssertionError(
         'При попытке импорта объекта приложения вознакло исключение: '

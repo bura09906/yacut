@@ -1,7 +1,7 @@
 import pytest
 from http import HTTPStatus
 
-from yacut_app.models import URLMap
+from yacut.models import URLMap
 
 PY_URL = 'https://www.python.org'
 TEST_BASE_URL = 'http://localhost'
