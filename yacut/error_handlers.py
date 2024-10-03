@@ -21,6 +21,24 @@ class InvalidAPIUsage(Exception):
         return dict(message=self.message)
 
 
+class ErrorCreatingShortLink(InvalidAPIUsage):
+    status_code = 500
+
+
+class InvalidShortError(InvalidAPIUsage):
+    pass
+
+
 @app.errorhandler(InvalidAPIUsage)
+def invalid_api_usage(error):
+    return jsonify(error.to_dict()), error.status_code
+
+
+@app.errorhandler(ErrorCreatingShortLink)
+def invalid_api_usage(error):
+    return jsonify(error.to_dict()), error.status_code
+
+
+@app.errorhandler(InvalidShortError)
 def invalid_api_usage(error):
     return jsonify(error.to_dict()), error.status_code
