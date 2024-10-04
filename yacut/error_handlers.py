@@ -21,11 +21,7 @@ class InvalidAPIUsage(Exception):
         return dict(message=self.message)
 
 
-class ErrorCreatingShortLink(InvalidAPIUsage):
-    status_code = 500
-
-
-class InvalidShortError(InvalidAPIUsage):
+class UrlmapCreationErrorAPI(InvalidAPIUsage):
     pass
 
 
@@ -34,11 +30,6 @@ def invalid_api_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
 
-@app.errorhandler(ErrorCreatingShortLink)
-def invalid_api_usage(error):
-    return jsonify(error.to_dict()), error.status_code
-
-
-@app.errorhandler(InvalidShortError)
+@app.errorhandler(UrlmapCreationErrorAPI)
 def invalid_api_usage(error):
     return jsonify(error.to_dict()), error.status_code

@@ -3,7 +3,6 @@ from wtforms import StringField, SubmitField, URLField
 from wtforms.validators import URL, DataRequired, Length, Optional
 
 from settings import MAX_LENGTH_ORIGINAL, MAX_LENGTH_SHORT, MIN_LENGTH_FIELD
-
 from .validators import validate_custom_id
 
 

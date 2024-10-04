@@ -1,7 +1,6 @@
 from flask import abort, flash, redirect, render_template
 
 from . import app
-from .error_handlers import ErrorCreatingShortLink, InvalidShortError
 from .forms import URLForm
 from .models import URLMap
 
@@ -19,10 +18,10 @@ def index_view():
             created_urlmap = urlmap.save()
             context['short_link'] = created_urlmap.short
             return render_template('yacut.html', **context)
-        except InvalidShortError as error:
-            flash(error.message)
-        except ErrorCreatingShortLink as error:
-            flash(error.message)
+        except ValueError as error:
+            flash(str(error))
+        except RuntimeError as error:
+            flash(str(error))
 
     return render_template('yacut.html', **context)
 

@@ -1,10 +1,9 @@
 from flask import jsonify, request
 
-from settings import API_FIELD_ORIGINAL_LINK
-
 from . import app
-from .error_handlers import InvalidAPIUsage
+from .error_handlers import InvalidAPIUsage, UrlmapCreationErrorAPI
 from .models import URLMap
+from settings import API_FIELD_ORIGINAL_LINK
 
 
 @app.route('/api/id/', methods=['POST'])
@@ -17,9 +16,14 @@ def get_short_link():
     if API_FIELD_ORIGINAL_LINK not in data:
         raise InvalidAPIUsage('\"url\" является обязательным полем!')
 
-    urlmap = URLMap.from_dict(data)
-    created_urlmap = urlmap.save()
-    return jsonify(created_urlmap.to_dict(host_url)), 201
+    try:
+        urlmap = URLMap.from_dict(data)
+        created_urlmap = urlmap.save()
+        return jsonify(created_urlmap.to_dict(host_url)), 201
+    except ValueError as error:
+        raise UrlmapCreationErrorAPI(str(error))
+    except RuntimeError as error:
+        raise UrlmapCreationErrorAPI(str(error), status_code=500)
 
 
 @app.route('/api/id/<string:short_id>/', methods=['GET'])

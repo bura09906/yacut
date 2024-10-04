@@ -4,12 +4,10 @@ from wtforms.validators import ValidationError
 
 from settings import PATTERN_SHORT_FIELD
 
-from .error_handlers import InvalidShortError
-
 
 def validate_short(short_link):
     if not re.fullmatch(PATTERN_SHORT_FIELD, short_link):
-        raise InvalidShortError(
+        raise ValueError(
             'Указано недопустимое имя для короткой ссылки'
         )
 

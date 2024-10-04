@@ -1,12 +1,10 @@
 import random
 from datetime import datetime
 
+from . import db
 from settings import (API_FIELD_ORIGINAL_LINK, API_FIELD_SHORT_LINK,
                       GEN_SHORT_LENGTH, MAX_LENGTH_ORIGINAL, MAX_LENGTH_SHORT,
                       SHORT_LINK_CHARACTERS)
-
-from . import db
-from .error_handlers import ErrorCreatingShortLink, InvalidShortError
 from .validators import validate_short
 
 
@@ -18,8 +16,8 @@ class URLMap(db.Model):
 
     def save(self):
         if self.get_by_field_short(self.short):
-            raise InvalidShortError(
-                'Предложенный вариант короткой ссылки уже существует.'
+            raise ValueError(
+                'Предложенный вариант короткой ссылки уже существует.',
             )
 
         validate_short(self.short)
@@ -38,9 +36,9 @@ class URLMap(db.Model):
             random.choices(SHORT_LINK_CHARACTERS, k=GEN_SHORT_LENGTH)
         )
         if URLMap.get_by_field_short(short):
-            raise ErrorCreatingShortLink(
+            raise RuntimeError(
                 'Возникла ошибка при создании короткой ссылки. '
-                'Повторите попытку'
+                'Повторите попытку',
             )
         return short
 
